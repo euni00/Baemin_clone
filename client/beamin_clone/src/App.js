@@ -1,7 +1,13 @@
+import Headerbar from "./components/Headerbar";
+import Contents from "./components/Contents";
+import Footer from "./components/Footer";
+import "./style.css";
 function App() {
   return (
     <div className="App">
-     안녕하세요
+      <Headerbar />
+      <Contents />
+      <Footer />
     </div>
   );
 }
