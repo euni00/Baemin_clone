@@ -41,7 +41,14 @@ app.get("/api/store", async function (req, res) {
   //   ];
 
   // mysql에서 데이터 가져오기
-  const [rows, fields] = await promisePool.query("SELECT * from store");
+  const [rows, fields] = await promisePool.query(
+    `SELECT *, Store._id AS Store_id from Store
+    LEFT JOIN Category
+    ON Store.category_id = Category._id
+    LEFT JOIN Place
+    ON Store.place_id = Place._id;
+    `
+  );
   console.log("rows", rows);
   const storeList = rows;
   res.send(storeList);
@@ -52,25 +59,29 @@ app.get("/api/store", async function (req, res) {
 
 // 상점 추가 api (Create)
 app.post("/api/store", async (req, res) => {
-  const { title, minimum_price } = req.body;
+  const { storename, minimum_price, place_id, category_id } = req.body;
   const [rows, fields] = await promisePool.query(
-    `INSERT into store(title, star, review_cnt, minimum_price) values(?, 0, 0, ?);`,
-    [title, minimum_price]
+    `INSERT into Store(storename, star, minimum_price, place_id, category_id) values(?, 0.0, ?, ?, ?);`,
+    [storename, minimum_price, place_id, category_id]
   );
-  console.log(title);
+  console.log(storename);
   console.log(minimum_price);
+  console.log(place_id);
+  console.log(category_id);
   res.send("success");
 });
 
 // 상점 수정 api (Update)
 app.put("/api/store", async (req, res) => {
-  const { title, minimum_price, _id } = req.body;
+  const { storename, minimum_price, place_id, category_id, _id } = req.body;
   const [rows, fields] = await promisePool.query(
-    `update store set title=?, minimum_price=? where _id=?;`,
-    [title, minimum_price, _id]
+    `update Store set storename=?, star=0, minimum_price=?, place_id=?, category_id=? where _id=?;`,
+    [storename, minimum_price, place_id, category_id, _id]
   );
-  console.log(title);
+  console.log(storename);
   console.log(minimum_price);
+  console.log(place_id);
+  console.log(category_id);
   console.log(_id);
   res.send("success");
 });
@@ -79,7 +90,7 @@ app.put("/api/store", async (req, res) => {
 app.delete("/api/store/:_id", async (req, res) => {
   const { _id } = req.params;
   const [rows, fields] = await promisePool.query(
-    `delete from store where _id=?;`,
+    `delete from Store where _id=?;`,
     [_id]
   );
   console.log(_id);
