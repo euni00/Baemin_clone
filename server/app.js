@@ -23,7 +23,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// 상점 데이터 가져오기 (Read)
+// mysql에서 상점 데이터 가져오기 (Read)
 app.get("/api/store", async function (req, res) {
   //   const storeList = [
   //     {
@@ -40,7 +40,6 @@ app.get("/api/store", async function (req, res) {
   //     },
   //   ];
 
-  // mysql에서 데이터 가져오기
   const [rows, fields] = await promisePool.query(
     `SELECT *, Store._id AS Store_id from Store
     LEFT JOIN Category
@@ -54,8 +53,17 @@ app.get("/api/store", async function (req, res) {
   res.send(storeList);
 });
 
-// /api/store/:id
+// /api/store/:_id
 // id에 해당하는 상점 하나 가져오기 (get)
+app.get("/api/store/:_id", async function (req, res) {
+  const { _id } = req.params;
+  const [rows, fields] = await promisePool.query(
+    `SELECT * from Store WHERE _id=?;`,
+    [_id]
+  );
+  console.log(_id);
+  res.send(rows);
+});
 
 // 상점 추가 api (Create)
 app.post("/api/store", async (req, res) => {
@@ -94,6 +102,11 @@ app.delete("/api/store/:_id", async (req, res) => {
     [_id]
   );
   console.log(_id);
+  res.send("success");
+});
+
+// 댓글 추가 api (Create)
+app.get("/api/comment", async (req, res) => {
   res.send("success");
 });
 
