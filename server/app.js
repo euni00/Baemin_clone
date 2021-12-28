@@ -110,6 +110,23 @@ app.get("/api/comment", async (req, res) => {
   res.send("success");
 });
 
+// category 조회 api (get)
+app.get("/api/category", async function (req, res) {
+  const [rows, fields] = await promisePool.query(`SELECT * from Category;`);
+  res.send(rows);
+});
+
+// category 추가 api (Create)
+app.post("/api/category", async (req, res) => {
+  const { title } = req.body;
+  const [rows, fields] = await promisePool.query(
+    `INSERT into Category(title) values(?);`,
+    [title]
+  );
+  console.log(title);
+  res.send("success");
+});
+
 // 서버 실행
 app.listen(4000, () => {
   console.log("server run");
