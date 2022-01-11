@@ -7,6 +7,8 @@ import Ads from "./components/Ads.js";
 import Category from "./components/Category";
 import Footer from "./components/Footer";
 import { QueryClient, QueryClientProvider } from "react-query";
+import Addstore from "./pages/AddStore";
+import DeleteStore from "./pages/DeleteStore";
 const queryClient = new QueryClient();
 function App() {
   const [page, setPage] = useState("baemin");
@@ -15,6 +17,8 @@ function App() {
       <div className="App">
         {page === "baemin" ? <Baemin /> : null}
         {page === "searchpages" ? <Searchpage /> : null}
+        {page === "addstore" ? <Addstore /> : null}
+        {page === "deletestore" ? <DeleteStore /> : null}
         <Footer setPage={setPage} />
       </div>
     </QueryClientProvider>

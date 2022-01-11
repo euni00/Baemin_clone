@@ -67,12 +67,13 @@ app.get("/api/store/:_id", async function (req, res) {
 
 // 상점 추가 api (Create)
 app.post("/api/store", async (req, res) => {
-  const { storename, minimum_price, place_id, category_id } = req.body;
+  const { storename, star, minimum_price, place_id, category_id } = req.body;
   const [rows, fields] = await promisePool.query(
-    `INSERT into Store(storename, star, minimum_price, place_id, category_id) values(?, 0.0, ?, ?, ?);`,
-    [storename, minimum_price, place_id, category_id]
+    `INSERT into Store(storename, star, minimum_price, place_id, category_id) values(?, ?, ?, ?, ?);`,
+    [storename, star, minimum_price, place_id, category_id]
   );
   console.log(storename);
+  console.log(star);
   console.log(minimum_price);
   console.log(place_id);
   console.log(category_id);
