@@ -11,6 +11,9 @@ export default function Footer({ setPage }) {
   function ClickDeleteStore() {
     setPage("deletestore");
   }
+  function ClickSignUp() {
+    setPage("signup");
+  }
   return (
     <div className="footer">
       <div onClick={ClickSearch}>검색</div>
@@ -18,6 +21,7 @@ export default function Footer({ setPage }) {
       <div onClick={ClickBaemin}>배민</div>
       <div onClick={ClickDeleteStore}>가게삭제</div>
       <div>my배민</div>
+      <div onClick={ClickSignUp}>회원가입</div>
     </div>
   );
 }

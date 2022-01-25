@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Addstore from "./pages/AddStore";
 import DeleteStore from "./pages/DeleteStore";
+import Signup from "./pages/Signup";
 const queryClient = new QueryClient();
 function App() {
   const [page, setPage] = useState("baemin");
@@ -19,6 +20,7 @@ function App() {
         {page === "searchpages" ? <Searchpage /> : null}
         {page === "addstore" ? <Addstore /> : null}
         {page === "deletestore" ? <DeleteStore /> : null}
+        {page === "signup" ? <Signup /> : null}
         <Footer setPage={setPage} />
       </div>
     </QueryClientProvider>
