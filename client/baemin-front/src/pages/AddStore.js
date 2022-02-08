@@ -17,13 +17,17 @@ export default function AddStore() {
     console.log(minimumprice);
     console.log(placeid);
     console.log(categoryid);
-    axios.post("http://localhost:4000/api/store", {
-      storename,
-      star,
-      minimum_price: minimumprice,
-      place_id: placeid,
-      category_id: categoryid,
-    });
+    axios.post(
+      "http://localhost:4000/api/store",
+      {
+        storename,
+        star,
+        minimum_price: minimumprice,
+        place_id: placeid,
+        category_id: categoryid,
+      },
+      { headers: { access_token: localStorage.getItem("access_token") } }
+    );
   }
   const [categoryList, setCategoryList] = useState([]);
   async function fetchData() {
