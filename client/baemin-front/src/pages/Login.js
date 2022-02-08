@@ -1,19 +1,29 @@
 import { useRef } from "react";
 import axios from "axios";
-export default function Signup() {
+import Error from "../components/Error";
+import { useState } from "react";
+export default function Login() {
   const inputRef = useRef({
     email: null,
     password: null,
   });
 
+  const [errorMessage, setErrorMessage] = useState("");
   const logInHandler = async () => {
-    console.log(inputRef);
-    const response = await axios.post("http://localhost:4000/api/user/login", {
-      email: inputRef.current.email.value,
-      password: inputRef.current.password.value,
-    });
-    localStorage.setItem("access_token", response.data.access_token);
-    localStorage.setItem("email", response.data.email);
+    try {
+      console.log(inputRef);
+      const response = await axios.post(
+        "http://localhost:4000/api/user/login",
+        {
+          email: inputRef.current.email.value,
+          password: inputRef.current.password.value,
+        }
+      );
+      localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("email", response.data.email);
+    } catch (err) {
+      setErrorMessage(err.message);
+    }
   };
 
   return (
@@ -31,6 +41,9 @@ export default function Signup() {
         ></input>
         <button onClick={logInHandler}>로그인</button>
       </div>
+      {errorMessage !== "" && (
+        <Error message={errorMessage} setErrorMessage={setErrorMessage} />
+      )}
     </div>
   );
 }

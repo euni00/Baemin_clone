@@ -12,7 +12,9 @@ export default function DeleteStore() {
     fetchData();
   }, []);
   async function ClickDeleteStore(id) {
-    await axios.delete(`http://localhost:4000/api/store/${id}`);
+    await axios.delete(`http://localhost:4000/api/store/${id}`, {
+      headers: { access_token: localStorage.getItem("access_token") },
+    });
     fetchData();
   }
   return (
@@ -21,6 +23,7 @@ export default function DeleteStore() {
         return (
           <div>
             <div>{store.storename}</div>
+            <div>{store.author}</div>
             <div>{store.star}</div>
             <button onClick={() => ClickDeleteStore(store.Store_id)}>
               삭제

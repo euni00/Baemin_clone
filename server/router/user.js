@@ -60,7 +60,7 @@ router.post("/login", async (req, res) => {
         // password did not match
       }
     } else {
-      res.send("없는 아이디입니다.");
+      res.status(401).send("없는 아이디입니다.");
     }
   } catch (err) {
     console.log("error : ", err);

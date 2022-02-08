@@ -63,7 +63,8 @@ router.post("/", validUser, async (req, res) => {
 
 // 상점 수정 api (Update)
 router.put("/", validUser, async (req, res) => {
-  const { storename, minimum_price, place_id, category_id, _id } = req.body;
+  const { storename, star, minimum_price, place_id, category_id, _id } =
+    req.body;
   const [authorRows, authorFields] = await promisePool.query(
     `SELECT author FROM Store WHERE _id=?`,
     [_id]
@@ -74,8 +75,8 @@ router.put("/", validUser, async (req, res) => {
     return;
   }
   const [rows, fields] = await promisePool.query(
-    `update Store set storename=?, star=0, minimum_price=?, place_id=?, category_id=? where _id=?;`,
-    [storename, minimum_price, place_id, category_id, _id]
+    `update Store set storename=?, star=?, minimum_price=?, place_id=?, category_id=? where _id=?;`,
+    [storename, star, minimum_price, place_id, category_id, _id]
   );
   console.log(storename);
   console.log(minimum_price);
