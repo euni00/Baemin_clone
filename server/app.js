@@ -13,10 +13,11 @@ const app = express();
 
 // cors 에러 해결을 위한 미들웨어
 app.use(cors());
-app.use(express.static("build"));
+// app.use(express.static("build"));
 // req.body 사용
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use("/", express.static(__dirname + "/build"));
 app.use("/api/store", storeRouter);
 app.use(commentRouter);
 app.use(categoryRouter);

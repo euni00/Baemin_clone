@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const promisePool = require("../model/index");
-const argon2 = require("argon2");
+// const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 
 router.post("/signup", async (req, res) => {
@@ -18,7 +18,8 @@ router.post("/signup", async (req, res) => {
     return;
   }
   try {
-    const hashedpassword = await argon2.hash(password);
+//  const hashedpassword = await argon2.hash(password);
+  const hashedpassword = password;
     const [rows, fields] = await promisePool.query(
       `INSERT INTO User (username, password, email, age) VALUES (?, ?, ?, ?);`,
       [username, hashedpassword, email, age]
@@ -42,7 +43,8 @@ router.post("/login", async (req, res) => {
       [email]
     );
     if (rows.length === 1) {
-      if (await argon2.verify(rows[0].password, password)) {
+      // if (await argon2.verify(rows[0].password, password)) {
+        if (rows[0].password === password) {
         const token = jwt.sign(
           { userid: rows[0].userid, email: rows[0].email },
           "secret"
