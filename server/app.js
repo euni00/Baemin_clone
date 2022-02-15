@@ -13,7 +13,7 @@ const app = express();
 
 // cors 에러 해결을 위한 미들웨어
 app.use(cors());
-
+app.use(express.static("build"));
 // req.body 사용
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -22,7 +22,11 @@ app.use(commentRouter);
 app.use(categoryRouter);
 app.use("/api/user", userRouter);
 
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/build/index.html");
+});
+const PORT = process.env.PORT || 4000;
 // 서버 실행
-app.listen(4000, () => {
+app.listen(PORT, () => {
   console.log("server run");
 });

@@ -1,0 +1,13 @@
+{
+  "name": "baemin_clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client-build": "cd client/baemin-front && npm install && npm run build && cd ../..",
+    "server-build": "cd server && npm install && cd ../",
+    "heroku-prebuild": "npm run client-build && npm run server-build && mv ./client/baemin-front/build ./server/",
+    "start": "node ./server/app.js"
+  }
+}
